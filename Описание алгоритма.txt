@@ -1,0 +1,58 @@
+-Для описания алгоритма возму за основу первый фильтр  requiredRange1 = [null, 200];
+-Беру предоставленный массив  courses
+
+-Фильтровать я буду массивом requiredRange1
+
+-Для начала надо перевести null в простое для понимание значение 
+я представляю что [0]null это от 0 а, [1]null это значение до, я поставлю миллиард
+для 
+
+-Далее надо обьявить  констанку которой присвою миллиард знаением
+const MAX_NUMBER1 = 1_000_000_000;
+
+-Далее мне нужно написать условие для requiredRange1 при котором null:
+если бедет первым значением то будет заменено на 0
+если вторым значение то будет заменено на обьявленную мной константу MAX_NUMBER1
+
+if (requiredRange1[0] === null) {
+    requiredRange1[0] = 0;
+}
+
+if (requiredRange1[1] === null) {
+    requiredRange1[1] = MAX_NUMBER1;
+}
+
+-Далее мне нужно то же самое сделать с главным массивом  я воспользуюсь мапингом этого массива 
+
+const courcesWithPrices1 = courses.map(course => {
+  const from = course.prices[0] === null ? 0 : course.prices[0]; 
+  const to = course.prices[1] === null ? MAX_NUMBER1 : course.prices[1];
+  
+  return {
+    name: course.name,
+    prices: [from, to]
+  }
+})
+
+-Теперь когда все массивы приведены в понятный вид я пишу код фильтра используя метод filter
+и возвращаю одно из сработавших условий 
+
+const filteredCourses1 = courcesWithPrices1.filter(({prices}) => {
+  const firstVariant = requiredRange1[0] <= prices[0] && prices[0] <= requiredRange1[1];
+  const secondVariant = requiredRange1[0] >= prices[0] && requiredRange1[1] <= prices[1];
+  const thirdVariant = requiredRange1[0] <= prices[1] && prices[1] <= requiredRange1[1];
+  
+  return firstVariant,  secondVariant,  thirdVariant;
+})
+
+-В конце мне нужно вывести получившийся результат в консоль 
+для того чтобы выводились только имена курсов подходяших под фильтр 
+я буду мапить  filteredCourses1 по свойству name 
+let itog1 = filteredCourses1.map(course => course.name) 
+
+
+Вывожу в консоль
+ console.log(itog1) 
+
+
+
